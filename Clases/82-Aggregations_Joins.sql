@@ -1,13 +1,10 @@
 
-SELECT count(*) as cantidad, continent from country
-GROUP BY continent
-ORDER BY continent asc;
-
---ejercicio
-
-SELECT count(*) as cantidad, b.name as continent
-FROM
-country a INNER JOIN continent b
-ON a.continent = b.code
-GROUP by b.name
-ORDER BY count(*) asc;
+(SELECT count(*) as count, b.name from country a
+FULL OUTER JOIN continent b on a.continent = b.code
+GROUP BY b.name)
+union
+(SELECT 0 as count, b.name from country a
+RIGHT JOIN continent b on a.continent = b.code
+WHERE a.continent is null
+GROUP BY b.name)
+ORDER by count;
